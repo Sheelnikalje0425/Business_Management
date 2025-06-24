@@ -1,0 +1,23 @@
+{% extends "layout.html" %}
+{% block content %}
+<h2>All Work Assignments</h2>
+<table border="1">
+    <tr>
+        <th>ID</th><th>Worker</th><th>Customer</th>
+        <th>Assigned On</th><th>Work Date</th>
+        <th>Progress</th><th>Sofas Done</th><th>Total Earning</th>
+    </tr>
+    {% for a in assignments %}
+    <tr>
+        <td>{{ a.id }}</td>
+        <td>{{ a.worker_name }}</td>
+        <td>{{ a.customer_name }}</td>
+        <td>{{ a.assign_date }}</td>
+        <td>{{ a.work_date or "-" }}</td>
+        <td>{{ a.work_progress }}</td>
+        <td>{{ a.sofas_completed }}</td>
+        <td>{{ a.total_earning }}</td>
+    </tr>
+    {% endfor %}
+</table>
+{% endblock %}

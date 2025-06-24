@@ -1,0 +1,18 @@
+{% extends "layout.html" %}
+{% block content %}
+    <h2>All Orders</h2>
+    <table border="1">
+        <tr>
+            <th>ID</th><th>Customer</th><th>Sofa</th><th>Status</th><th>Date</th>
+        </tr>
+        {% for order in orders %}
+        <tr>
+            <td>{{ order.id }}</td>
+            <td>{{ order.customer_name }}</td>
+            <td>{{ order.sofa_type }}</td>
+            <td>{{ order.status }}</td>
+            <td>{{ order.order_date }}</td>
+        </tr>
+        {% endfor %}
+    </table>
+{% endblock %}

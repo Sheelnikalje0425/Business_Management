@@ -1,0 +1,18 @@
+{% extends "layout.html" %}
+{% block content %}
+    <h2>All Workers</h2>
+    <table border="1">
+        <tr>
+            <th>ID</th><th>Name</th><th>Skill</th><th>Rate</th><th>Status</th>
+        </tr>
+        {% for worker in workers %}
+        <tr>
+            <td>{{ worker.id }}</td>
+            <td>{{ worker.name }}</td>
+            <td>{{ worker.skill_type }}</td>
+            <td>{{ worker.rate_per_sofa }}</td>
+            <td>{{ "Active" if worker.is_active else "Inactive" }}</td>
+        </tr>
+        {% endfor %}
+    </table>
+{% endblock %}

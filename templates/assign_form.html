@@ -1,0 +1,21 @@
+{% extends "layout.html" %}
+{% block content %}
+<h2>Assign Worker to Order</h2>
+<form method="POST">
+    <label for="order">Select Order:</label>
+    <select name="order_id" required>
+        {% for order in orders %}
+            <option value="{{ order.id }}">{{ order.customer_name }} (Order ID: {{ order.id }})</option>
+        {% endfor %}
+    </select><br><br>
+
+    <label for="worker">Select Worker:</label>
+    <select name="worker_id" required>
+        {% for worker in workers %}
+            <option value="{{ worker.id }}">{{ worker.name }} (ID: {{ worker.id }})</option>
+        {% endfor %}
+    </select><br><br>
+
+    <button type="submit">Assign</button>
+</form>
+{% endblock %}
