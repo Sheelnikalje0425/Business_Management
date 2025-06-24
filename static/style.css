@@ -83,3 +83,29 @@ form select, form button {
     padding: 8px;
     margin-bottom: 16px;
 }
+
+.sidebar ul ul.submenu {
+    margin-top: 5px;
+    margin-left: 10px;
+}
+
+.sidebar ul ul.submenu li {
+    font-size: 14px;
+}
+
+/* Sidebar submenu */
+.sidebar ul .submenu {
+    display: none;
+    list-style: none;
+    padding-left: 20px;
+    margin-top: 5px;
+}
+
+.sidebar ul .has-submenu:hover .submenu {
+    display: block;
+}
+
+.sidebar ul .has-submenu > a {
+    cursor: pointer;
+    font-weight: bold;
+}

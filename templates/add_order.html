@@ -1,0 +1,35 @@
+{% extends "layout.html" %}
+{% block content %}
+<h2>Add New Order</h2>
+<form method="POST">
+    <label>Customer Name:</label>
+    <input type="text" name="customer_name" required><br><br>
+
+    <label>Address:</label>
+    <input type="text" name="address" required><br><br>
+
+    <label>Contact Number:</label>
+    <input type="text" name="contact_number" required><br><br>
+
+    <label>Order Date:</label>
+    <input type="date" name="order_date" required><br><br>
+
+    <label>Sofa Type:</label>
+    <input type="text" name="sofa_type" required><br><br>
+
+    <label>Quantity:</label>
+    <input type="number" name="quantity" required><br><br>
+
+    <label>Expected Delivery:</label>
+    <input type="date" name="expected_delivery" required><br><br>
+
+    <label>Notes (optional):</label>
+    <textarea name="notes"></textarea><br><br>
+
+    <button type="submit">Add Order</button>
+</form>
+
+{% if get_flashed_messages() %}
+<p style="color: green;">{{ get_flashed_messages()[0] }}</p>
+{% endif %}
+{% endblock %}

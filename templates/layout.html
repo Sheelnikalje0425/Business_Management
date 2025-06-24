@@ -27,7 +27,21 @@
         <h3>Dashboard</h3>
         <ul>
             <li><a href="{{ url_for('index') }}">🏠 Home</a></li>
-            <li><a href="{{ url_for('view_orders') }}">📦 Orders</a></li>
+            <!--<li>
+                📦 Orders
+                <ul class="submenu">
+                    <li><a href="{{ url_for('view_orders') }}">View Orders</a></li>
+                    <li><a href="{{ url_for('add_order') }}">Add New Order</a></li>
+                </ul>
+            </li>-->
+            <li class="has-submenu">
+                <a href="javascript:void(0)">📦 Orders ▾</a>
+                <ul class="submenu">
+                    <li><a href="{{ url_for('view_orders') }}">📄 View Orders</a></li>
+                    <li><a href="{{ url_for('add_order') }}">➕ Add New Order</a></li>
+                </ul>
+            </li>
+
             <li><a href="{{ url_for('view_workers') }}">👷 Workers</a></li>
             <li><a href="{{ url_for('assign_worker') }}">🛠️ Assign Work</a></li>
             <li><a href="{{ url_for('view_assignments') }}">📄 Assignments</a></li>
