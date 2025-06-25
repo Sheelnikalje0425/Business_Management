@@ -1,0 +1,22 @@
+{% extends "layout.html" %}
+{% block content %}
+<h2>Completed Orders</h2>
+<table border="1">
+  <tr>
+    <th>ID</th>
+    <th>Customer</th>
+    <th>Sofa</th>
+    <th>Qty</th>
+    <th>Completed On</th>
+  </tr>
+  {% for order in orders %}
+  <tr>
+    <td>{{ order.id }}</td>
+    <td>{{ order.customer_name }}</td>
+    <td>{{ order.sofa_type }}</td>
+    <td>{{ order.quantity }}</td>
+    <td>{{ order.completion_date }}</td>
+  </tr>
+  {% endfor %}
+</table>
+{% endblock %}

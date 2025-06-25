@@ -1,9 +1,23 @@
 {% extends "layout.html" %}
 {% block content %}
     <h2>All Orders</h2>
+
+    {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+            {% for category, message in messages %}
+                <div class="flash {{ category }}">{{ message|safe }}</div>
+            {% endfor %}
+        {% endif %}
+    {% endwith %}
+
     <table border="1">
         <tr>
-            <th>ID</th><th>Customer</th><th>Sofa</th><th>Status</th><th>Date</th>
+            <th>ID</th>
+            <th>Customer</th>
+            <th>Sofa</th>
+            <th>Status</th>
+            <th>Date</th>
+            <th>Action</th>
         </tr>
         {% for order in orders %}
         <tr>
@@ -12,6 +26,16 @@
             <td>{{ order.sofa_type }}</td>
             <td>{{ order.status }}</td>
             <td>{{ order.order_date }}</td>
+            <td>
+                {% if order.status != 'completed' %}
+                    <a href="{{ url_for('mark_order_completed', order_id=order.id) }}"
+                       onclick="return confirm('Are you sure you want to mark this order as completed?')">
+                       ✅ Mark as Completed
+                    </a>
+                {% else %}
+                    ✔️ Completed
+                {% endif %}
+            </td>
         </tr>
         {% endfor %}
     </table>

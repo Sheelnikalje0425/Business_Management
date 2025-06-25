@@ -1,21 +1,111 @@
 {% extends "layout.html" %}
 {% block content %}
 <h2>Assign Worker to Order</h2>
+
 <form method="POST">
-    <label for="order">Select Order:</label>
-    <select name="order_id" required>
-        {% for order in orders %}
-            <option value="{{ order.id }}">{{ order.customer_name }} (Order ID: {{ order.id }})</option>
-        {% endfor %}
-    </select><br><br>
 
-    <label for="worker">Select Worker:</label>
-    <select name="worker_id" required>
-        {% for worker in workers %}
-            <option value="{{ worker.id }}">{{ worker.name }} (ID: {{ worker.id }})</option>
-        {% endfor %}
-    </select><br><br>
+  <!-- Order -->
+  <label>Select Order:</label>
+  <select name="order_id" required>
+    {% for o in orders %}
+      <option value="{{ o.id }}">{{ o.customer_name }} ({{ o.id }})</option>
+    {% endfor %}
+  </select><br><br>
 
-    <button type="submit">Assign</button>
+  <!-- Worker -->
+  <label>Select Worker:</label>
+  <select name="worker_id" required>
+    {% for w in workers %}
+      <option value="{{ w.id }}">{{ w.name }} ({{ w.id }})</option>
+    {% endfor %}
+  </select><br><br>
+
+  <!-- Fabric -->
+  <label>Select Sofa Fabric:</label>
+  <select name="fabric_id" required>
+    {% for f in fabrics %}
+      <option value="{{ f.id }}">{{ f.fabric_type }}</option>
+    {% endfor %}
+  </select><br><br>
+
+  <!-- Sofa MODEL -->
+  <label>Select Sofa Model:</label>
+  <select name="sofa_model_id" id="modelSelect" required>
+    <option value="">-- Select Model --</option>
+    {% for m in sofa_models %}
+      <option value="{{ m.id }}">{{ m.model_name }}</option>
+    {% endfor %}
+  </select><br><br>
+
+  <!-- Sofa DESIGN Selection -->
+  <label for="designGrid">Sofa Design (optional):</label><br>
+
+  <!-- Image Grid -->
+  <div id="designGrid" style="display:none; gap:10px; flex-wrap:wrap;"></div>
+
+  <!-- Hidden Input for Selected Design -->
+  <input type="hidden" name="sofa_design_id" id="designInput">
+
+  <!-- Preview of Selected Design -->
+  <img id="designPreview" src="" alt="Chosen Design"
+       style="display:none; max-width:220px; border:1px solid #ccc; padding:5px; margin-top:10px;"><br><br>
+
+  <!-- Completion Date -->
+  <label>Expected Completion Date:</label>
+  <input type="date" name="completion_date" required><br><br>
+
+  <!-- Instructions -->
+  <label>Special Instructions:</label><br>
+  <textarea name="instructions" rows="3" cols="40"></textarea><br><br>
+
+  <button type="submit">Assign</button>
 </form>
+
+<!-- JS: Fetch & Select Designs -->
+<script>
+const modelSelect  = document.getElementById('modelSelect');
+const grid         = document.getElementById('designGrid');
+const hiddenInput  = document.getElementById('designInput');
+const preview      = document.getElementById('designPreview');
+
+modelSelect.addEventListener('change', () => {
+  const modelId = modelSelect.value;
+  grid.innerHTML = '';
+  hiddenInput.value = '';
+  preview.style.display = 'none';
+  if (!modelId) { grid.style.display = 'none'; return; }
+
+  fetch(`/get_designs/${modelId}`)
+    .then(r => r.json())
+    .then(data => {
+      if (!data.length) { grid.style.display = 'none'; return; }
+      grid.style.display = 'flex';
+      data.forEach(d => {
+        const img = document.createElement('img');
+        img.src   = d.photo_url;
+        img.alt   = d.model_name;
+        img.style.cursor = 'pointer';
+        img.style.maxWidth = '120px';
+        img.style.border   = '2px solid transparent';
+        img.style.borderRadius = '4px';
+        img.style.margin = '5px';
+        img.dataset.id = d.id;
+
+        img.addEventListener('click', () => {
+          // Remove highlight from all
+          grid.querySelectorAll('img').forEach(i => i.style.border='2px solid transparent');
+          // Highlight selected
+          img.style.border = '2px solid #28a745';
+          // Set hidden input
+          hiddenInput.value = d.id;
+          // Show preview
+          preview.src = d.photo_url;
+          preview.style.display = 'block';
+        });
+
+        grid.appendChild(img);
+      });
+    });
+});
+</script>
 {% endblock %}
